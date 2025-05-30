@@ -22,7 +22,7 @@ Traditional cache-compression schemes, tuned for long *prompts*, tumble on these
 
 **R-KV** — **R**edundancy-aware KV-cache compression for **R**easoning models — solves this by ranking tokens on-the-fly for both **importance** *and* **non-redundancy**, retaining only the informative, diverse ones.
 
-- **10 % cache → ≈ 100 % accuracy**  
+- **10 % cache → ≈ 100 % accuracy**
 - **16 % cache → 105 % accuracy**<br>
   *(noise reduction even nudges performance above the full cache)*  
 - **90 % memory saved** and **6.6 × throughput** during long CoT generation  
@@ -152,7 +152,7 @@ At *16 %* (Llama-8B) or *33 %* (Qwen-14B) cache, **R-KV reaches 105 % of FullKV 
 
 ### 🧮 Memory Saving
 **R-KV** allocates two fixed-size buffers—one for the retained KV cache and one for freshly generated tokens.  
-Because these buffers stay the same size regardless of sequence length, memory usage remains *constant*, unlike **FullKV**, whose memory grows linearly with the sequence. See the full breakdown in the [Complexity appendix](./docs/appendix_complexity.md).
+Because these buffers stay the same size regardless of sequence length, memory usage remains *constant*, unlike **FullKV**, whose memory grows linearly with the sequence.
 
 R-KV keeps **two small, fixed-size buffers**:
 
@@ -264,8 +264,6 @@ We measured both memory savings and end-to-end throughput (see **Table&nbsp;`eff
 ### Takeaway
 By combining **attention strength with redundancy filtering**, **R-KV** retains the important context and removes noise, successfully completing the task.  
 In this example, the pure attention strategy of **SnapKV** fails due to limited coverage and excess redundancy.
-
-> For additional experiments and implementation details, see [docs/RKV_details.md](./docs/RKV_details.md).
 
 
 ## Setup
