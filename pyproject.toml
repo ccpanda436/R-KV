@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "rkv"
 version = "0.1.0"
 requires-python = ">=3.9"
-description = "R1-KV is the first production-level KV Cache Compression Method for serving R1-like models."
+description = "R-KV is the first production-level KV Cache Compression Method for serving R1-like models."
 readme = "README.md"
 
 [tool.setuptools]

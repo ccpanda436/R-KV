@@ -1,4 +1,4 @@
-<h1 align="center">R1-KV</h1>
+<h1 align="center">R-KV</h1>
 
 
 > **Shrink the cache, keep the brains.**  
@@ -64,10 +64,10 @@ Existing compression tools focus on *long prompts* and falter on *long generatio
 
 ## 🔍 Method — Redundancy-aware KV Cache Compression (R-KV)
 
-Redundancy-aware KV Cache Compression for R1-Style models (i.e., **R1-KV**) is the first production-level KV Cache Compression Method for serving R1-like models.
+Redundancy-aware KV Cache Compression for R1-Style models (i.e., **R-KV**) is the first production-level KV Cache Compression Method for serving R1-like models.
 
 <div align="center">
-  <img src="./assets/method.png" alt="R1-KV Main Results" width="100%">
+  <img src="./assets/method.png" alt="R-KV Main Results" width="100%">
 </div>
 
 Large-language models (LLMs) waste a surprising amount of memory on **redundant key/value (KV) tokens** during long-form reasoning.  
@@ -129,7 +129,7 @@ Head-layer-budget schedule (e.g. PyramidKV, HeadKV) are orthogonal and omitted h
 R-KV attains parity with **10–34 %** cache and even beats the FullKV baseline at *10 %*.
 
 <div align="center">
-  <img src="./assets/main_results.png" alt="R1-KV Main Results" width="100%">
+  <img src="./assets/main_results.png" alt="R-KV Main Results" width="100%">
 </div>
 
 ### Main Accuracy Numerical Table
@@ -277,7 +277,7 @@ We measured both memory savings and end-to-end throughput (see **Table&nbsp;`eff
 > **Grey** = not selected &nbsp;|&nbsp; **Light orange → Dark red** = selected tokens (deeper red = chosen by more attention heads)
 
 <div align="center">
-  <img src="./assets/comparison.png" alt="R1-KV Main Results" width="100%">
+  <img src="./assets/comparison.png" alt="R-KV Main Results" width="100%">
 </div>
 
 ### Key Findings
@@ -332,7 +332,7 @@ Before running the scripts, you need to build the rkv package:
 pip install -e .
 ```
 
-Use the following command to run R1-like models with R1-KV on math benchmarks:
+Use the following command to run R1-like models with R-KV on math benchmarks:
 ```bash
 bash examples/run.sh
 ```
