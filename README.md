@@ -335,6 +335,7 @@ Run `analysis_scripts/analysis.ipynb` to see which tokens are kept at each compr
 
 # Citation
 
+```
 @misc{cai2025rkvredundancyawarekvcache,
       title={R-KV: Redundancy-aware KV Cache Compression for Training-Free Reasoning Models Acceleration}, 
       author={Zefan Cai and Wen Xiao and Hanshi Sun and Cheng Luo and Yikai Zhang and Ke Wan and Yucheng Li and Yeyang Zhou and Li-Wen Chang and Jiuxiang Gu and Zhen Dong and Anima Anandkumar and Abedelkadir Asi and Junjie Hu},
@@ -344,4 +345,5 @@ Run `analysis_scripts/analysis.ipynb` to see which tokens are kept at each compr
       primaryClass={cs.CL},
       url={https://arxiv.org/abs/2505.24133}, 
 }
+```
 
