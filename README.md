@@ -15,6 +15,68 @@
 
 - 🚀 [25/05/29] We are pleased to announce the release of **R-KV**, a highly efficient decoding time KV Cache compression method to serve reasoning Models.
 
+
+## Setup
+
+### Install Dependencies
+Use the following command to install the minimal required dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+### Install FlashAttention
+If you're using Hugging Face, we default to flash attention to speed up attention computation:
+
+```python
+model = AutoModelForCausalLM.from_pretrained(
+    "model_name_or_path",
+    attn_implementation="flash_attention_2",
+)
+```
+
+### Evaluation
+
+You need to build the dependencies of the evaluation toolkit separately:
+```bash
+cd evaluation/latex2sympy
+pip install -e .
+cd ..
+pip install -r requirements.txt
+```
+
+## Quick Start
+Before running the scripts, you need to build the rkv package:
+```bash
+pip install -e .
+```
+
+Use the following command to run R1-like models with R-KV on math benchmarks:
+```bash
+bash examples/run.sh
+```
+
+Or you could use the code scripts:
+
+```bash
+export CUDA_VISIBLE_DEVICES=0
+
+python3 ./run_math.py \
+--dataset_path ./data/aime24.jsonl \
+--save_path ./outputs/output.jsonl \
+--model_path deepseek-ai/DeepSeek-R1-Distill-Llama-8B \
+--max_length 16484 \
+--eval_batch_size 1 \
+--method rkv \
+--kv_budget 128
+
+```
+
+To evaluate benchmark results, simply run:
+```bash
+bash examples/eval.sh
+```
+The results will be saved in the `outputs` directory.
+
 ## Overview
 
 Large language models that rely on chain-of-thought (CoT) or self-reflection can crack tough reasoning tasks—but at the cost of **very long outputs that bloat the key–value (KV) cache** during inference.  
@@ -264,68 +326,6 @@ We measured both memory savings and end-to-end throughput (see **Table&nbsp;`eff
 ### Takeaway
 By combining **attention strength with redundancy filtering**, **R-KV** retains the important context and removes noise, successfully completing the task.  
 In this example, the pure attention strategy of **SnapKV** fails due to limited coverage and excess redundancy.
-
-
-## Setup
-
-### Install Dependencies
-Use the following command to install the minimal required dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-### Install FlashAttention
-If you're using Hugging Face, we default to flash attention to speed up attention computation:
-
-```python
-model = AutoModelForCausalLM.from_pretrained(
-    "model_name_or_path",
-    attn_implementation="flash_attention_2",
-)
-```
-
-### Evaluation
-
-You need to build the dependencies of the evaluation toolkit separately:
-```bash
-cd evaluation/latex2sympy
-pip install -e .
-cd ..
-pip install -r requirements.txt
-```
-
-## Quick Start
-Before running the scripts, you need to build the rkv package:
-```bash
-pip install -e .
-```
-
-Use the following command to run R1-like models with R-KV on math benchmarks:
-```bash
-bash examples/run.sh
-```
-
-Or you could use the code scripts:
-
-```bash
-export CUDA_VISIBLE_DEVICES=0
-
-python3 ./run_math.py \
---dataset_path ./data/aime24.jsonl \
---save_path ./outputs/output.jsonl \
---model_path deepseek-ai/DeepSeek-R1-Distill-Llama-8B \
---max_length 16484 \
---eval_batch_size 1 \
---method rkv \
---kv_budget 128
-
-```
-
-To evaluate benchmark results, simply run:
-```bash
-bash examples/eval.sh
-```
-The results will be saved in the `outputs` directory.
 
 ## Visualization
 
