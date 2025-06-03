@@ -7,7 +7,7 @@
 
 <p align="center">
     ｜<a href="https://zefan-cai.github.io/R-KV.page/"><b>🌏 Page</b></a> |
-    <a href="WIP"><b>📖 Paper</b></a>｜
+    <a href="https://arxiv.org/abs/2505.24133"><b>📖 Paper</b></a>｜
 </p>
 
 
