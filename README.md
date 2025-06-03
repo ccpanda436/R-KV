@@ -335,6 +335,8 @@ Run `analysis_scripts/analysis.ipynb` to see which tokens are kept at each compr
 
 # Citation
 
+If you find R-KV useful in your research, please cite us:
+
 ```
 @misc{cai2025rkvredundancyawarekvcache,
       title={R-KV: Redundancy-aware KV Cache Compression for Training-Free Reasoning Models Acceleration}, 
