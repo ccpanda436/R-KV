@@ -8,6 +8,11 @@ from tqdm import tqdm
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from rkv.monkeypatch import replace_llama, replace_qwen2, replace_qwen3
+from moba import register_moba, MoBAConfig
+
+
+import torch.distributed as dist
+#dist.init_process_group(backend="nccl", init_method="env://")  # 初始化分布式
 
 dataset2key = {
     "gsm8k": ["question", "answer"],
@@ -120,11 +125,13 @@ def parse_arguments():
     parser.add_argument("--model_path", type=str)
     parser.add_argument("--max_length", type=int, default=-1)
     parser.add_argument("--eval_batch_size", type=int, default=1)
+    parser.add_argument("--moba-chunk-size", type=int, default=4096)
+    parser.add_argument("--moba-topk", type=int, default=12)
     parser.add_argument(
         "--attn_implementation",
         type=str,
         default="flash_attention_2",
-        choices=["flash_attention_2", "sdpa", "eager"],
+        choices=["flash_attention_2", "sdpa", "eager","moba"],
     )
 
     # method config
@@ -208,12 +215,13 @@ if __name__ == "__main__":
             replace_qwen2(compression_config)
         else:
             raise ValueError(f"Unsupported model: {args.model_path}")
-
+    
+    register_moba(MoBAConfig(args.moba_chunk_size, args.moba_topk))
     model = AutoModelForCausalLM.from_pretrained(
         args.model_path,
         torch_dtype=torch.bfloat16,
         low_cpu_mem_usage=True,
-        device_map="auto",
+        device_map="cuda:0",
         use_cache=True,
         attn_implementation=args.attn_implementation,
     )

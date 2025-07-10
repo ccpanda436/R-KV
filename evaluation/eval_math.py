@@ -218,11 +218,12 @@ def main_all(args):
         args.size = "default"
         args.method = dataset
         print(f"Processing: dataset={dataset} from file {json_file}")
-        # try:
-        result_json = main(dataset, args)
-        # except Exception as e:
-        #     print(f"Error processing {json_file}: {e}")
-        #     continue
+        try:
+            print("yes")
+            result_json = main(dataset, args)
+        except Exception as e:
+            print(f"Error processing {json_file}: {e}")
+            continue
         acc = result_json.get("acc", None)
         results_table[json_file] = acc
 
